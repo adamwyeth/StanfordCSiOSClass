@@ -19,10 +19,11 @@ class ViewController: UIViewController {
     //@IBOutlet weak var display: UILabel! = nil
     //! instead of ?-> "always automatically unwrap"
     @IBOutlet weak var display: UILabel!
+    @IBOutlet weak var history: UILabel!
+    
     
     //If type can be inferred, you shouldn't specify it
     var userIsIntheMiddleOfTypingANumber = false
-    var userIsTypingAfterDecimalPoint = false
     var brain = CalculatorBrain()
     
     @IBAction func appendDigit(sender: UIButton) {
@@ -43,6 +44,7 @@ class ViewController: UIViewController {
             enter()
         }
         if let operation = sender.currentTitle {
+            history.text = history.text! + " " + operation
             if let result = brain.performOperation(operation) {
                 displayValue = result
             } else {
@@ -52,8 +54,14 @@ class ViewController: UIViewController {
     }
     
     @IBAction func appendDecimal(sender: UIButton) {
-        if !userIsTypingAfterDecimalPoint {
-            display.text = display.text! + "."
+        if userIsIntheMiddleOfTypingANumber {
+            if let result = display.text!.rangeOfString(".") {
+            } else {
+                display.text = display.text! + "."
+            }
+        } else {
+            display.text = "."
+            userIsIntheMiddleOfTypingANumber = true
         }
     }
     
@@ -76,6 +84,7 @@ class ViewController: UIViewController {
     var operandStack = Array<Double>()
     @IBAction func enter() {
         userIsIntheMiddleOfTypingANumber = false
+        history.text = history.text! + " " + display.text!
         if let result = brain.pushOperand(displayValue) {
             displayValue = result
         } else {
@@ -97,6 +106,12 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBAction func clear(sender: UIButton) {
+        userIsIntheMiddleOfTypingANumber = false
+        brain = CalculatorBrain()
+        display.text = "0"
+        history.text = ""
+    }
     
 }
 

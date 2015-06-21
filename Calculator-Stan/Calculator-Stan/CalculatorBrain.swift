@@ -13,6 +13,7 @@ class CalculatorBrain
     //Implements Printable Protocol
     private enum Op: Printable {
         case Operand(Double)
+        case ConstantOperation(String, Double)
         case UnaryOperation(String, Double -> Double)
         case BinaryOperation(String, (Double, Double) -> Double)
         
@@ -21,6 +22,8 @@ class CalculatorBrain
                 switch self {
                 case .Operand(let operand):
                     return "\(operand)"
+                case .ConstantOperation(let symbol, _):
+                    return symbol
                 case .UnaryOperation(let symbol, _):
                     return symbol
                 case .BinaryOperation(let symbol, _):
@@ -45,6 +48,7 @@ class CalculatorBrain
         knownOps["√"] = Op.UnaryOperation("√", sqrt)
         knownOps["sin"] = Op.UnaryOperation("sin", sin)
         knownOps["cos"] = Op.UnaryOperation("cos", cos)
+        knownOps["π"] = Op.ConstantOperation("π", M_PI)
     }
     
     //Note arrays and dictionaries are structs, structs are passed by value
@@ -59,6 +63,8 @@ class CalculatorBrain
             switch op {
             case .Operand(let operand):
                 return(operand, remainingOps)
+            case .ConstantOperation(_, let constant):
+                return(constant, remainingOps)
             case .UnaryOperation(_, let operation):
                 let operandEvaluation = evaluate(remainingOps)
                 if let operand = operandEvaluation.result
