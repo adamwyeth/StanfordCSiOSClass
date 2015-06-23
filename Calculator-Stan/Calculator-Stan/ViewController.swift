@@ -22,6 +22,11 @@ class ViewController: UIViewController {
     @IBOutlet weak var history: UILabel!
     
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        display.adjustsFontSizeToFitWidth = true
+        history.adjustsFontSizeToFitWidth = true
+    }
     
     //If type can be inferred, you shouldn't specify it
     var userIsIntheMiddleOfTypingANumber = false

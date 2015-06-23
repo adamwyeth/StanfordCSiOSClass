@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="2Au-V7-U6H">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+    </dependencies>
+    <scenes>
+        <!--Happiness View Controller-->
+        <scene sceneID="GVI-7k-hDT">
+            <objects>
+                <viewController id="2Au-V7-U6H" customClass="HappinessViewController" customModule="Happiness" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="2vu-bg-BGF"/>
+                        <viewControllerLayoutGuide type="bottom" id="rHW-ZR-11U"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="lxj-zD-Gk5">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="Eb4-oO-UcL" customClass="FaceView" customModule="Happiness" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Eb4-oO-UcL" firstAttribute="bottom" secondItem="rHW-ZR-11U" secondAttribute="top" id="7CV-Nc-BaG"/>
+                            <constraint firstItem="Eb4-oO-UcL" firstAttribute="top" secondItem="lxj-zD-Gk5" secondAttribute="top" id="U3z-Ri-Ik9"/>
+                            <constraint firstAttribute="trailing" secondItem="Eb4-oO-UcL" secondAttribute="trailing" id="kfh-0F-sJX"/>
+                            <constraint firstItem="Eb4-oO-UcL" firstAttribute="leading" secondItem="lxj-zD-Gk5" secondAttribute="leading" id="py5-qw-iDY"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Vhz-Ff-aY3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="81" y="315"/>
+        </scene>
+    </scenes>
+</document>

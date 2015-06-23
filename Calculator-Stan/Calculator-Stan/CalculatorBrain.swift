@@ -65,6 +65,26 @@ class CalculatorBrain
         knownOps["π"] = Op.ConstantOperation("π", M_PI)
     }
     
+    var program: AnyObject { //guaranteed to be a propertyList
+        get {
+            return opStack.map {$0.description}
+        }
+        set {
+            if let opSymbols = newValue as? Array<String> {
+                var newOpStack = [Op]()
+                for opSymbol in opSymbols {
+                    if let op = knownOps[opSymbol] {
+                        newOpStack.append(op)
+                    } else if let operand = NSNumberFormatter().numberFromString(opSymbol)?.doubleValue {
+                        newOpStack.append(.Operand(operand))
+                    }
+                }
+                opStack = newOpStack
+            }
+        }
+    }
+    
+    
     //Note arrays and dictionaries are structs, structs are passed by value
     //while classes are passed by references
     //"implicit 'let' in front of all things you pass"
