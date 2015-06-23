@@ -69,7 +69,7 @@ class ViewController: UIViewController {
     
     //Apparently these need to be private in Swift 1.2 due to new
     //interactions with objective c
-    private func performOperation(operation: Double -> Double) {
+    /*private func performOperation(operation: Double -> Double) {
         if operandStack.count >= 1 {
             displayValue = operation(operandStack.removeLast())
             enter()
@@ -80,7 +80,7 @@ class ViewController: UIViewController {
         if operandStack.count >= 2 {
             displayValue = operation(operandStack.removeLast(), operandStack.removeLast())
         }
-    }
+    }*/
     
     var operandStack = Array<Double>()
     @IBAction func enter() {
@@ -117,11 +117,32 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBAction func setVar(sender: AnyObject) {
+        
+        let varString = sender.currentTitle!!
+        let varName = varString.substringFromIndex(varString.startIndex.successor())
+        if let value = displayValue {
+            brain.variableValues[varName] = value
+        }
+        userIsIntheMiddleOfTypingANumber = false
+    }
+    
+    @IBAction func pushVar(sender: UIButton) {
+        let varName = sender.currentTitle!
+        if let result = brain.pushOperand(varName) {
+            displayValue = result
+            history.text = brain.description
+        } else {
+            displayValue = nil
+        }
+    }
+    
     @IBAction func clear(sender: UIButton) {
         userIsIntheMiddleOfTypingANumber = false
         brain = CalculatorBrain()
         display.text = " "
         history.text = " "
+        
     }
     
 }
