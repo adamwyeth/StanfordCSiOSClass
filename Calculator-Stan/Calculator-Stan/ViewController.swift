@@ -47,7 +47,7 @@ class ViewController: UIViewController {
         if let operation = sender.currentTitle {
             if let result = brain.performOperation(operation) {
                 displayValue = result
-                history.text = brain.description
+               
             } else {
                 displayValue = nil
             }
@@ -89,7 +89,7 @@ class ViewController: UIViewController {
         if let val = displayValue {
             let result = brain.pushOperand(val)
             displayValue = result!
-            history.text = brain.description
+           
         } else {
             displayValue = nil
         }
@@ -107,6 +107,7 @@ class ViewController: UIViewController {
         }
         set {
             //Magic variable
+            history.text = brain.description
             if let val = newValue {
                 display.text = "\(val)"
             }
@@ -124,14 +125,21 @@ class ViewController: UIViewController {
         if let value = displayValue {
             brain.variableValues[varName] = value
         }
+        let result = brain.evaluate()
+        displayValue = result
         userIsIntheMiddleOfTypingANumber = false
     }
     
     @IBAction func pushVar(sender: UIButton) {
         let varName = sender.currentTitle!
+        if userIsIntheMiddleOfTypingANumber {
+            enter()
+            userIsIntheMiddleOfTypingANumber = false
+        }
+        
         if let result = brain.pushOperand(varName) {
             displayValue = result
-            history.text = brain.description
+           
         } else {
             displayValue = nil
         }
