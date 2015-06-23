@@ -22,6 +22,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var history: UILabel!
     
     
+    
     //If type can be inferred, you shouldn't specify it
     var userIsIntheMiddleOfTypingANumber = false
     var brain = CalculatorBrain()
@@ -44,11 +45,11 @@ class ViewController: UIViewController {
             enter()
         }
         if let operation = sender.currentTitle {
-            history.text = history.text! + " " + operation
             if let result = brain.performOperation(operation) {
                 displayValue = result
+                history.text = brain.description
             } else {
-                displayValue = 0
+                displayValue = nil
             }
         }
     }
@@ -84,24 +85,34 @@ class ViewController: UIViewController {
     var operandStack = Array<Double>()
     @IBAction func enter() {
         userIsIntheMiddleOfTypingANumber = false
-        history.text = history.text! + " " + display.text!
-        if let result = brain.pushOperand(displayValue) {
-            displayValue = result
+        //history.text = history.text! + " " + display.text!
+        if let val = displayValue {
+            let result = brain.pushOperand(val)
+            displayValue = result!
+            history.text = brain.description
         } else {
-            //really wish displayValue was an optional
-            displayValue = 0
+            displayValue = nil
         }
     }
     
     
     //Computed property
-    var displayValue: Double {
+    var displayValue: Double? {
         get {
-            return NSNumberFormatter().numberFromString(display.text!)!.doubleValue
+            if let value = NSNumberFormatter().numberFromString(display.text!)?.doubleValue {
+                return value
+            } else {
+                return nil
+            }
         }
         set {
             //Magic variable
-            display.text = "\(newValue)"
+            if let val = newValue {
+                display.text = "\(val)"
+            }
+            else {
+                display.text = " "
+            }
             userIsIntheMiddleOfTypingANumber = false
         }
     }
@@ -109,8 +120,8 @@ class ViewController: UIViewController {
     @IBAction func clear(sender: UIButton) {
         userIsIntheMiddleOfTypingANumber = false
         brain = CalculatorBrain()
-        display.text = "0"
-        history.text = ""
+        display.text = " "
+        history.text = " "
     }
     
 }
