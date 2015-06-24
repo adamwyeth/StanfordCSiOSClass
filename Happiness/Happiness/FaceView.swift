@@ -8,11 +8,24 @@
 
 import UIKit
 
-class FaceView: UIView {
+//Must be a class because only classes can be declared as "weak"
+protocol FaceViewDataSource: class {
+    
+    //Always will end up passing itself along so we know who is getting set and also have acces
+    //to the sender properties
+    func smilinessForFaceView(sender: FaceView) -> Double?
+}
 
+@IBDesignable
+class FaceView: UIView {
+    
+    @IBInspectable
     var lineWidth: CGFloat = 3 { didSet {setNeedsDisplay() } }
+    @IBInspectable
     var color: UIColor = UIColor.blueColor() { didSet {setNeedsDisplay() } }
+    @IBInspectable
     var scale: CGFloat = 0.90 {didSet {setNeedsDisplay()} }
+    
     var faceCenter: CGPoint {
         return convertPoint(center, fromView: superview)
     }
@@ -21,6 +34,11 @@ class FaceView: UIView {
         return min(bounds.size.width, bounds.size.height) / 2 * scale
     }
     
+    //Why optional? Could live without a data source
+    //Why weak? Since the view and controller are pointing to eachother, they will stay in memory
+    //forever if we do not declare one of them as weak. I.e. weak means don't keep the controller
+    //in memory to satisy this pointer
+    weak var dataSource: FaceViewDataSource?
     
     //This is how we create constants in swift, create structs with lets
     // and then declare them as static
@@ -87,11 +105,19 @@ class FaceView: UIView {
         bezierPathForEye(.Left).stroke()
         bezierPathForEye(.Right).stroke()
         
-        let smiliness = 0.75
+        let smiliness = dataSource?.smilinessForFaceView(self) ?? 0.0
         let smilePath =
             bezierPathForSmile(smiliness)
         smilePath.stroke()
         
+    }
+    
+    func scale(gesture: UIPinchGestureRecognizer) {
+        if gesture.state == .Changed {
+            scale *= gesture.scale
+            //forces changes to be incremental and only changes scale when gesture changes
+            gesture.scale = 1
+        }
     }
 
 
