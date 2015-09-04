@@ -12,7 +12,7 @@ import UIKit
 protocol FaceViewDataSource: class {
     
     //Always will end up passing itself along so we know who is getting set and also have acces
-    //to the sender properties
+    //to the sender properties 
     func smilinessForFaceView(sender: FaceView) -> Double?
 }
 

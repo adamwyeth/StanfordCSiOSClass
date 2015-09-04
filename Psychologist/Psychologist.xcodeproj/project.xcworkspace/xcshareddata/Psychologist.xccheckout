@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>B5DD3158-D9EA-4342-B0E0-85593B6E73CC</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>Psychologist</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>EC2A73644E3F70A0C53E7D0659F67AEFC4CB2523</key>
 		<string>github.com:adamwyeth/StanfordCSiOSClass.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Psychologist/Psychologist.xcodeproj/project.xcworkspace</string>
+	<string>Psychologist/Psychologist.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>EC2A73644E3F70A0C53E7D0659F67AEFC4CB2523</key>
